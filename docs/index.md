@@ -11,7 +11,7 @@ TiDB单可用区集群是基于阿里云环境部署优化，提供OLTP规模化
 RAM账号所需权限 
 ------------------------------
 
-TiDB单可用区集群服务需要对ECS、ESS、SLB、VPC和OSS等资源进行访问和创建操作，若您使用RAM账号创建服务实例，则需要在创建服务实例前，对使用的RAM账号添加相应资源的权限。添加RAM权限的详细操作，请参见[为RAM用户授权](t161341.md#task-187800)。
+TiDB单可用区集群服务需要对ECS、ESS、SLB、VPC和OSS等资源进行访问和创建操作，若您使用RAM账号创建服务实例，则需要在创建服务实例前，对使用的RAM账号添加相应资源的权限。添加RAM权限的详细操作，请参见[为RAM用户授权](https://help.aliyun.com/zh/ram/user-guide/grant-permissions-to-the-ram-user)。
 
 
 |       权限策略名称        |        备注        |
