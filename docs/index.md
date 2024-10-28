@@ -24,7 +24,6 @@ TiDB单可用区集群服务需要对ECS、ESS、SLB、VPC和OSS等资源进行�
 | AliyunEIPFullAccess | 管理弹性公网IP（EIP）的权限 |
 
 
-
 TiDB单可用区集群服务资源配置 
 -------------------------------------
 
