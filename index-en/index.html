@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="计算巢是阿里云开放给企业应用服务商的服务管理平台。服务商能够在计算巢上发布私有化部署服务，为其客户提供云上软件一键部署的能力；同时也支持全托管模式的服务，赋能服务商托管其客户资源。">
+  <title>Cloud Database TiDB Single Availability Zone Cluster Service - Aliyun 计算巢 x TiDB</title>
+
+  <link rel="shortcut icon" href="../img/favicon.ico">
+
+  <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css">
+  <link rel="stylesheet" href="../css/theme.css">
+  
+
+  
+
+  
+  
+
+  
+    <script src="../search/main.js"></script>
+  
+
+  
+
+  <script src="../js/highlight.min.js"></script>
+  <script>hljs.highlightAll();</script>
+</head>
+
+<body>
+  <div class="container">
+    <div class="nav">
+      <div class="nav-inner">
+        <div class="logo">
+          <img src="./img/logo-2x.png">
+        </div>
+        <div class="nav-list">
+          <ul>
+          
+              <li><a href="#cloud-database-tidb-single-availability-zone-cluster-service">Cloud Database TiDB Single Availability Zone Cluster Service</a></li>
+              
+                  <li><a href="#overview">Overview</a></li>
+                  
+              
+                  <li><a href="#permissions-required-by-the-ram-account">Permissions required by the RAM account</a></li>
+                  
+              
+                  <li><a href="#tidb-single-zone-cluster-service-resource-configuration">TiDB single-zone cluster service resource configuration</a></li>
+                  
+              
+                  <li><a href="#deployment-process">Deployment Process</a></li>
+                  
+              
+                  <li><a href="#log-on-to-the-tidb-cluster">Log on to the TiDB cluster</a></li>
+                  
+              
+                  <li><a href="#tidb-cluster-scaling-capacity-management">TiDB Cluster Scaling Capacity Management</a></li>
+                  
+              
+          
+          </ul>
+        </div>
+      </div>
+    </div>
+    <div class="content theme-github">
+      
+      <div class="content-inner">        
+        
+        <h1 id="cloud-database-tidb-single-availability-zone-cluster-service">Cloud Database TiDB Single Availability Zone Cluster Service</h1>
+<blockquote>
+<p><strong>Disclaimer:</strong> This document may contain third-party product information, which is for reference only. alibaba cloud does not make any implied or other commitments regarding the performance, reliability, and operation of third-party products.</p>
+</blockquote>
+<h2 id="overview">Overview</h2>
+<p>TiDB single-zone clusters are cloud databases that are deployed and optimized based on the Alibaba Cloud environment, provide OLTP scale and real-time HTAP capabilities, and are cloud-native, one-click capacity scaling, financial-level high availability, MySQL protocol compatibility, and big data ecology. This topic describes how to deploy a TiDB single-zone cluster service instance.</p>
+<h2 id="permissions-required-by-the-ram-account">Permissions required by the RAM account</h2>
+<p>The TiDB single-zone cluster service needs to access and create resources such as ECS, ESS, SLB, VPC, and OSS. If you use a RAM account to create a service instance, you need to add the corresponding resource permissions to the RAM account before creating the service instance.</p>
+<table>
+<thead>
+<tr>
+<th>Permission policy name</th>
+<th>Comment</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AliyunECSFullAccess</td>
+<td>Permissions to manage ECS instances</td>
+</tr>
+<tr>
+<td>AliyunESSFullAccess</td>
+<td>Permissions to manage the Elastic Scaling Service (ESS)</td>
+</tr>
+<tr>
+<td>AliyunSLBFullAccess</td>
+<td>Permissions to manage the Load Balancing Service (SLB)</td>
+</tr>
+<tr>
+<td>AliyunVPCFullAccess</td>
+<td>Permissions to manage a VPC</td>
+</tr>
+<tr>
+<td>AliyunOSSFullAccess</td>
+<td>Manage Object Storage Service (OSS) permissions</td>
+</tr>
+<tr>
+<td>AliyunEIPFullAccess</td>
+<td>Manage Elastic IP(EIP) permissions</td>
+</tr>
+</tbody>
+</table>
+<h2 id="tidb-single-zone-cluster-service-resource-configuration">TiDB single-zone cluster service resource configuration</h2>
+<p>Before deploying a service instance, you need to prepare and configure related resources in advance to ensure that the service instance can be deployed successfully. the following table lists the minimum configurations of the basic and high service resources.
+<strong>Important</strong> The system space can be adjusted according to the actual situation, but it cannot be less than 40GB.</p>
+<p>| Configuration Items | Basic Edition | High Edition |
+| --------------------------------------------------------- | ------------------------------------------------------------------ |
+| Local SSD ECS instances | Three local SSD ECS instances with 8 vCPU 64 GiB | Three local SSD ECS instances with 16 vCPU 64 GiB |
+| Compute ECS instances | 4 2 vCPU 4 GiB Compute ECS instances 2 4 vCPU 8 GiB Compute ECS instances | 3 4 vCPU 8 GiB Compute ECS instances 2 8 vCPU 16 GiB Compute ECS instances 1 2 vCPU 4 GiB Compute ECS instances |
+| Advanced SLB Load Balancing | 1 | 1 |
+| | 1 | 1 | 1 |
+| System disk | 40 GB | 40 GB |</p>
+<h2 id="deployment-process">Deployment Process</h2>
+<p><strong>Deployment steps</strong></p>
+<ol>
+<li>
+<p>Click the deployment link to purchase the product and complete the deployment through the deployment link in the product details.</p>
+</li>
+<li>
+<p>After the service instance is successfully deployed, access the TiDB database service through the SLB load balancer of the service deployment.</p>
+</li>
+</ol>
+<p><strong>Deployment parameters</strong></p>
+<p>You can use the service deployment link published by the service provider in the computing nest to deploy Alibaba Cloud resources and software provided by the service provider. When you create a service instance, you need to configure the service instance information.
+Detailed parameters and precautions that need to be configured for the TiDB single-zone cluster service.</p>
+<ul>
+<li><strong>Geography</strong></li>
+</ul>
+<p>Please select the appropriate region based on the actual situation. The TiDB single-availability zone cluster service is currently applicable to any region.
+<img alt="Region" src="../images-en/p448528.png" /></p>
+<ul>
+<li><strong>Payment Type</strong></li>
+</ul>
+<p>Support pay-as-you-go and prepaid two payment modes, users can choose according to the actual situation.</p>
+<ul>
+<li><strong>Package selection</strong></li>
+</ul>
+<p>TiDB single-zone cluster service currently supports two package types: basic version and high-configuration version, which correspond to different machine configurations and performance.
+<img alt="Select Package" src="../images-en/p447310.png" /></p>
+<ul>
+<li><strong>Topology Information</strong></li>
+</ul>
+<p>The parameters in the topology information area are filled in by default. You can modify the default values according to your business needs.
+<img alt="Topology Information" src="../images-en/p447339.png" /></p>
+<ul>
+<li><strong>Basic resource configuration</strong></li>
+</ul>
+<p>Set up VPC networks and switch resources in a single zone.
+<img alt="Basic Resource Configuration" src="../images-en/p447342.png" /></p>
+<ul>
+<li><strong>Cluster Information</strong></li>
+</ul>
+<p>Set the system disk size and logon password.</p>
+<p>The default value of the system disk is 40GB. Value range: 40\~ 500, unit: GB.</p>
+<p>The login password, which is 8-30 characters in length and must contain three items (uppercase letters, lowercase letters, numbers, and special symbols in ()\'\~!@#$%\^\&amp;\ <em>_-+ =|{}[]:;' \&lt;&gt;,.?/).
+</em><em>Important</em>* The logon password set here is the logon password of the ECS server, TiDB cluster service, and TiDB cluster monitoring Grafana after the service instance is deployed. Please keep it properly.</p>
+<p><img alt="Cluster Information" src="../images-en/p447375.png" /></p>
+<ul>
+<li><strong>Tags and Resource Groups</strong></li>
+</ul>
+<p>You can set tag attributes and resource group ownership for TiDB single-zone cluster services as needed.
+<img alt="Tags and resource groups" src="../images-en/p447383.png" /></p>
+<h2 id="log-on-to-the-tidb-cluster">Log on to the TiDB cluster</h2>
+<p>After the service instance is deployed, you can log on to the TiDB cluster of the service to view the instance resource information.</p>
+<ol>
+<li>
+<p>Log in to the Compute Nest Console (https://computenest.console.aliyun.com/#/vendor/cn-hangzhou/services).</p>
+</li>
+<li>
+<p>In the left-side navigation pane, click <strong>Service Instance Management</strong>.</p>
+</li>
+<li>
+<p>On the <strong>Private Deployment Service</strong> tab page, find the service instance you created.</p>
+</li>
+<li>
+<p>Click the ID of the created service instance to enter the service instance details page.<img alt="Service Instance Details" src="../images-en/p447926.png" /></p>
+</li>
+<li>
+<p>Click <strong>Overview</strong>. On the Overview tab page, view the TiDB cluster information.</p>
+</li>
+<li>
+<p>Click the IP address after <strong>TiDB Dasboard</strong> to enter the visual operation and maintenance monitoring page. After logging in, you can view the operation and maintenance monitoring information.</p>
+</li>
+<li>
+<p>Click the IP address after <strong>Grafana</strong> to go to the visual cluster performance monitoring page. After logging in, you can view the performance monitoring information.</p>
+</li>
+</ol>
+<p>On the Cluster Performance Monitoring page, click <strong>TiDB-prod-Overview</strong> to view the overview of the DB cluster instance.
+<img alt="Example Overview" src="../images-en/p447555.png" /></p>
+<ol>
+<li>Click the <strong>Resources</strong> tab and find the instance whose instance name is <strong>ControlServer</strong>. Click <strong>Remote Connection in the</strong> Operation <strong>column
+</strong>.<img alt="Remote Connection" src="../images-en/p447928.png" /></li>
+</ol>
+<p>Log on to the TiDB database management console TiUP and view the cluster information after logging on to the console.<img alt="Cluster Information" src="../images-en/p447558.png" /></p>
+<h2 id="tidb-cluster-scaling-capacity-management">TiDB Cluster Scaling Capacity Management</h2>
+<p>If the current traffic and data volume increase or decrease significantly, you can scale the TiDB cluster according to the actual situation.
+<strong>Important</strong> To scale in and out, you need to scale the TiDB compute node scaling group and TiKV storage node scaling group separately.</p>
+<ol>
+<li>
+<p>Use the Alibaba Cloud account to log on to the <a href="https://computenest.console.aliyun.com/#/vendor/cn-hangzhou/services">Compute Nest Console</a>.</p>
+</li>
+<li>
+<p>In the left-side navigation pane, click <strong>Service Instance Management</strong>.</p>
+</li>
+<li>
+<p>On the <strong>Private Deployment Service</strong> tab page, find the service instance you created.</p>
+</li>
+<li>
+<p>Click the ID of the created service instance to enter the service instance details page.<img alt="Service Instance Details" src="../images-en/p447926.png" /></p>
+</li>
+<li>
+<p>Click <strong>Operations Management</strong>. In the <strong>Application Operations</strong> box, click <strong>Elastic Scaling</strong>.</p>
+</li>
+<li>
+<p>In the Elastic Scaling dialog box, configure the scaling information.</p>
+</li>
+</ol>
+<table>
+<thead>
+<tr>
+<th>Configuration Item</th>
+<th>Configuration Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Scaling Group ID</td>
+<td>Select the name of the scaling group to be scaled.</td>
+</tr>
+<tr>
+<td>Adjustment Method of Scaling Rule</td>
+<td>Scale out, scale in, or adjust to a specified quantity according to the plan.</td>
+</tr>
+<tr>
+<td>Number of ECS instances in the scaling group to be adjusted</td>
+<td>Enter the number of instances to be adjusted.</td>
+</tr>
+<tr>
+<td>RAM role played by OOS</td>
+<td>Select the permission for scaling operations. By default, the existing permissions of the current account are used.</td>
+</tr>
+<tr>
+<td>Task Description</td>
+<td>The description of the scaling operation.</td>
+</tr>
+</tbody>
+</table>
+<ol>
+<li>Click <strong>Create</strong>.</li>
+</ol>
+<p>After the creation is complete, you can view the scaling progress on the <strong>Operations Management</strong> tab page.
+<img alt="View scaling progress" src="../images-en/p447682.png" /></p>
+<p>After the scaling group is scaled, you can view the scaling information through Tiup in the iDB cluster management console.
+<img alt="Query scaling information" src="../images-en/p447684.png" /></p>
+        
+      </div>
+
+      <div class="copyrights">© 2009-2022 Aliyun.com 版权所有</div>
+    </div>
+  </div>
+  
+  <!--
+  MkDocs version      : 1.6.1
+  Docs Build Date UTC : 2026-03-23 08:58:52.514331+00:00
+  -->
+</body>
+</html>
